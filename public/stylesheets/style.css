@@ -1,0 +1,33 @@
+/* ローディング画面 */
+#loading {
+  width: 720px;
+  height: 480px;
+  transition: all 1s;
+  background-color: #0bd;
+
+  position: fixed;
+  top: 92px;
+  left: 95px;
+  z-index: 9999;
+}
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto;
+  background-color: #fff;
+  border-radius: 100%;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+/* ローディングアニメーション */
+@keyframes sk-scaleout {
+  0% {
+    transform: scale(0);
+  } 100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
