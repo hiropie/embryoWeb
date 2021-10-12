@@ -1,6 +1,6 @@
 $(function() {
     const socket = io();
-    $('form').submit(function() {
+    $('#gifChange').submit(function() {
         socket.emit('chat-message', $('#reload').val());
         $('#reload').val('');
         return false;
@@ -12,6 +12,4 @@ $(function() {
 
     socket.on('condition', function(count) {
     });
-
-    
 });

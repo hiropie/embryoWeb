@@ -40,8 +40,6 @@ function chat(server) {
         socket.on("disconnect", function() {
         });
     });
-
-    const 
 };
 
 

@@ -11,8 +11,21 @@
     <p>Welcome to <%= title %></p>
     <p id="num">1</p>
     <img  src="/images/actionScreen.gif" id="embryo_gif" width="720" height="480"> 
-    <ul id="messages"></ul>
-    <form>
+    <button id="gifStart">再生</button>
+    <table border="1" id="parameter">
+      <tr align="center">
+        <th>気温</th>
+        <th>湿度</th>
+      </tr>
+      <tr align="center">
+        <td id="tmp">0</td>
+        <td id="hum">0</td>
+      </tr>
+    </table>
+    <form id="pushDispenser">
+      <button id="push" type="submit">1プッシュ</button>
+    </form>
+    <form id="gifChange">
       <button id="reload" type="submit">reload</button>
     </form>
 
@@ -39,11 +52,10 @@
         //loadGif(accessCount);
       };
       
-      document.getElementById(load).onclick = loadGif();
-
-      function loadGif(num){
-        document.getElementById(embryo_gif).src = '/images/gifs/actionScreen'+(num)+'.gif'
-      }
+      $('#gifStart').on('click', function(){
+        nowSrc = $('img').attr('src');
+        $('img').attr('src', nowSrc);
+      });
     </script>
   </body>
 </html>
