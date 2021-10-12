@@ -1,13 +1,17 @@
 $(function() {
     const socket = io();
     $('form').submit(function() {
-        console.log($('#m').val());
-        socket.emit('chat-message', $('#m').val());
-        $('#m').val('');
+        socket.emit('chat-message', $('#reload').val());
+        $('#reload').val('');
         return false;
     });
-    socket.on('chat-message', function(msg) {
-        $('#messages').append($('<li>').text(msg));
-        window.scrollTo(0, document.body.scrollHeight);
+    socket.on('chat-message', function(count) {
+        $('#num').text(count);
+        $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count-1)+'.gif');
     });
+
+    socket.on('condition', function(count) {
+    });
+
+    
 });

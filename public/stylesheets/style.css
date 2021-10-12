@@ -1,13 +1,13 @@
 /* ローディング画面 */
 #loading {
-  width: 720px;
-  height: 480px;
+  width: 100vw;
+  height: 100vh;
   transition: all 1s;
   background-color: #0bd;
 
   position: fixed;
-  top: 92px;
-  left: 95px;
+  top: 0px;
+  left: 0px;
   z-index: 9999;
 }
 .spinner {
@@ -31,3 +31,14 @@
   opacity: 0;
   visibility: hidden;
 }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial; }
+form { background: #000; padding: 5px; position: fixed; bottom: 0; width: 100%; }
+form #reload { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+form input { border: 0; padding: 10px; width: 80%; margin: auto; }
+form #Send { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+#messages { margin-bottom: 40px }

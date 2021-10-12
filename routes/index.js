@@ -11,7 +11,7 @@ const ffmpegInstaller = require("@ffmpeg-installer/ffmpeg");
 const ffprobe = require("@ffprobe-installer/ffprobe");
 const screenshot = require('desktop-screenshot');
 
-//make mp4
+
 var accessNum = 0;
 let count = 1;
 const WIDTH   = 1280;             // 画像サイズ X
@@ -32,12 +32,7 @@ router.get('/', function(req, res, next) {
       console.log("2秒経過");
     }).then(()=>{
       makeAnimeGif(accessNum);
-    }).then(()=>{
-      // var data = {
-      //   title: 'Express'
-      // };
-      // res.render('index', data);
-    });
+    })
   });
   var data = {
     title: 'Express',
@@ -150,7 +145,7 @@ async function makeFileList(){
   }
 }
 
-// Make Gif (and Gif to MP4)
+// Make Gif 
 async function makeAnimeGif(num){
   //ファイルリスト取得
   const list = await makeFileList();
@@ -163,7 +158,7 @@ async function makeAnimeGif(num){
 
   // アニメGIF設定
   const encoder = new GIFEncoder(WIDTH, HEIGHT);
-  encoder.createReadStream().pipe( fs.createWriteStream(GifFile+num+'.gif') );
+  encoder.createReadStream().pipe(fs.createWriteStream(GifFile+num+'.gif'));
   encoder.start();
   encoder.setRepeat(-1);   // 0:リピートあり, -1:なし
   encoder.setDelay(50);  // フレーム間隔(ミリ秒)
@@ -187,9 +182,7 @@ async function makeAnimeGif(num){
       encoder.addFrame(ctx);
   }
   encoder.finish()
-  console.log("Gif created!!");
-
-  //convert();
+  console.log(GifFile+num+'.gif');
 }
 
 module.exports = router;
