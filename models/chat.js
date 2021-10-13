@@ -3,6 +3,7 @@ const fs = require('fs');
 const modify = require('./../public/javascripts/modify');
 const generator = require('./../public/javascripts/gif');
 const boardDo = require('./../public/javascripts/arduino');
+const { Led } = require('johnny-five');
 
 var accessNum = 1;
 let count = 1;
@@ -35,8 +36,16 @@ function chat(server) {
           console.log("  湿度 : ", hum);
           socket.emit('humi', hum);
           socket.emit('temp', tmp);
-      },5000)
+        },5000);
+
+        socket.on('humUp',function(){
+          led.on();
+          setTimeout(()=>{
+            led.off();
+          },2000);
+        })
         socket.on("disconnect", function() {
+
         });
     });
 };

@@ -17,4 +17,9 @@ $(function() {
     socket.on('temp', function(tmp){
         $('#tmp').text(tmp);
     });
+
+    $('#pushDispenser').submit(function(){
+        socket.emit('humUp',$('#push').val());
+        return false;
+    });
 });
