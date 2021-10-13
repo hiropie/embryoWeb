@@ -57,22 +57,16 @@ async function makeShot(dirName){
   count = 1;
   cleanDir(dirName);
   await new Promise((resolve)=>{
-    // fs.readdir(modify.toImage+modify.imgPath, function(error, files){
-    //   files.forEach(function(file){
-    //     fs.unlinkSync(modify.toImage+modify.imgPath+'/'+file);
-    //     //console.log('delete');
-    //   });
-    // });
-
-    var loop = setInterval(()=>{
-      shots();
-      if(count > modify.clearInterval-1){
-        clearInterval(loop);
-        resolve();
-      }
-    },modify.interval*100);
-  });
-}
+        var loop = setInterval(()=>{
+          shots();
+          if(count > modify.clearInterval-1){
+            console.log("end");
+            clearInterval(loop);
+            resolve();
+          }
+        },modify.interval*100);
+      });
+    }
 
 function shots(){
   screenshot(modify.toImage+modify.imgPath+'/'+count+".jpg", 
@@ -161,7 +155,7 @@ async function makeAnimeGif(num){
   encoder.createReadStream().pipe(fs.createWriteStream(GifFile+num+'.gif'));
   encoder.start();
   encoder.setRepeat(-1);   // 0:リピートあり, -1:なし
-  encoder.setDelay(50);  // フレーム間隔(ミリ秒)
+  encoder.setDelay(100);  // フレーム間隔(ミリ秒)
   encoder.setQuality(200); // 画像品質
 
   // canvas準備
