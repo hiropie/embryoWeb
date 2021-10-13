@@ -12,7 +12,7 @@
     <p id="num">1</p>
     <img  src="/images/actionScreen.gif" id="embryo_gif" width="720" height="480"> 
     <button id="gifStart">再生</button>
-    <table border="1" id="parameter">
+    <table id="parameter">
       <tr align="center">
         <th>気温</th>
         <th>湿度</th>
@@ -40,7 +40,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
         crossorigin="anonymous"></script>
-    <script src="javascripts/index.js"></script>
+    <script src="javascripts/server-socket.js"></script>
     <script>
       var accessCount = 1;
 
@@ -48,7 +48,7 @@
         setTimeout(()=>{
           const spinner = document.getElementById('loading');
           spinner.classList.add('loaded');
-        },25000);
+        },60000);
         //loadGif(accessCount);
       };
       

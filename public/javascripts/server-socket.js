@@ -10,6 +10,11 @@ $(function() {
         $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count-1)+'.gif');
     });
 
-    socket.on('condition', function(count) {
+    socket.on('humi', function(hum){
+        $('#hum').text(hum);
+    });
+
+    socket.on('temp', function(tmp){
+        $('#tmp').text(tmp);
     });
 });

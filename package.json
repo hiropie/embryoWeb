@@ -18,6 +18,7 @@
     "fs": "0.0.1-security",
     "gifencoder": "^2.0.1",
     "http-errors": "~1.6.3",
+    "johnny-five": "^2.1.0",
     "morgan": "~1.9.1",
     "path": "^0.12.7",
     "socket.io": "^2.3.0",
