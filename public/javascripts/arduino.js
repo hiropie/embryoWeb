@@ -1,6 +1,7 @@
 const five = require("johnny-five");
 const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
 
+
  
 
 const boardDo = board.on('ready', function () {
@@ -22,6 +23,8 @@ const boardDo = board.on('ready', function () {
         //process.exit(); //終了
     }
   });
+
+  //led.blink(500);
 
 //   setInterval(()=>{
 //     console.log("  気温 : ", tmp);

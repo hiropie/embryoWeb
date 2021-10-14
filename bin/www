@@ -5,7 +5,6 @@
  */
 
 var app = require('../app');
-var chat = require('../models/chat');
 const boardDo = require('./../models/arduino-chat');
 var debug = require('debug')('embryo:server');
 var http = require('http');
