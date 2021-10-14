@@ -6,8 +6,10 @@
 
 var app = require('../app');
 var chat = require('../models/chat');
+const boardDo = require('./../models/arduino-chat');
 var debug = require('debug')('embryo:server');
 var http = require('http');
+
 
 /**
  * Get port from environment and store in Express.
@@ -29,7 +31,8 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-chat(server);
+boardDo(server);
+// chat(server);
 
 /**
  * Normalize a port into a number, string, or false.

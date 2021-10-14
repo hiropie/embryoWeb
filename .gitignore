@@ -1,3 +1,5 @@
 /node_modules/
-*.gif
-*.jpg
+
+/public/images/*
+!/public/images/basis/
+

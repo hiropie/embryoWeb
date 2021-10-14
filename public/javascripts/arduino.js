@@ -1,9 +1,10 @@
 const five = require("johnny-five");
-const board = new five.Board("COM6"); //ポート名指定はWindowsで必要なため、
+const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
 
  
 
 const boardDo = board.on('ready', function () {
+  var led = new five.Led(7);
   var bme280 = new five.IMU({
     controller: "BME280",
     address: 0x76, // optional    
