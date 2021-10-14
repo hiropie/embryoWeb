@@ -1,9 +1,6 @@
 const five = require("johnny-five");
-<<<<<<< HEAD
 const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
-=======
-const board = new five.Board({port: "COM3"}); //ポート名指定はWindowsで必要なため、
->>>>>>> 385fdbe605fbf7c4025c68f5c148d226f2ee22f9
+
 
  
 
