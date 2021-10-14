@@ -19,7 +19,11 @@ $(function() {
     });
 
     $('#pushDispenser').submit(function(){
+<<<<<<< HEAD
         socket.emit('humUp', $('#push').val());
+=======
+        socket.emit('humUp',$('#push').val());
+>>>>>>> 385fdbe605fbf7c4025c68f5c148d226f2ee22f9
         return false;
     });
 });
