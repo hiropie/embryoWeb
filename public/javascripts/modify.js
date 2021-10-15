@@ -10,7 +10,7 @@ var imgPrefix = 'screen_';
 
 //specify interval in seconds to clear the screenshots folder.Leave it blank if no need for reset
 //blink.jsでは撮影する枚数を示す
-var clearInterval = 50;
+var clearInterval = 30;
 
 //時刻を取得する
 require('date-utils');

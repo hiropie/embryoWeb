@@ -67,10 +67,6 @@ function boardDo(server) {
             socket.on("disconnect", function() {
             });
         });
-        // setInterval(()=>{
-        //     console.log("  気温 : ", tmp);
-        //     console.log("  湿度 : ", hum);
-        // },5000)
     })
 }
 
