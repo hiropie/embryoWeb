@@ -10,7 +10,6 @@ const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル名
 
 function chat(server) {
-  boardDo;
     const sio = socketio.listen(server);
     sio.on('connection', function(socket) {
         socket.on('chat-message', function() {

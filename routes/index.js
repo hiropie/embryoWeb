@@ -17,17 +17,17 @@ cleanDir(modify.toImage+"gifs");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   
-  accessNum++;
-  generator.capture(modify.toImage+modify.imgPath).then(()=>{
-    new Promise((resolve)=>{
-      setTimeout(() => {
-        resolve();
-      }, 2000);
-      console.log("2秒経過");
-    }).then(()=>{
-      generator.mkGif(accessNum);
-    })
-  });
+  // accessNum++;
+  // generator.capture(modify.toImage+modify.imgPath).then(()=>{
+  //   new Promise((resolve)=>{
+  //     setTimeout(() => {
+  //       resolve();
+  //     }, 2000);
+  //     console.log("2秒経過");
+  //   }).then(()=>{
+  //     generator.mkGif(accessNum);
+  //   })
+  // });
   var data = {
     title: 'Express',
     num: accessNum,

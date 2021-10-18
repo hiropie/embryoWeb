@@ -4,31 +4,31 @@
     <title><%= title %></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
   </head>
   <body>
-    
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <p id="num">1</p>
-    <img  src="/images/basis/first.png" id="embryo_gif" width="720" height="480"> 
-    <button id="gifStart">再生</button>
-    <table id="parameter">
-      <tr align="center">
-        <th>気温</th>
-        <th>湿度</th>
-      </tr>
-      <tr align="center">
-        <td id="tmp">0</td>
-        <td id="hum">0</td>
-      </tr>
-    </table>
-    <form id="pushDispenser">
-      <button id="push" type="submit">1プッシュ</button>
-    </form>
-    <form id="gifChange">
-      <button id="reload" type="submit">reload</button>
-    </form>
-
+    <div id="image">
+      <img  src="/images/basis/first.png" id="embryo_gif" width="720" height="480"> 
+      <div id="buttons">
+        <button id="gifStart">再生</button>
+        <form id="pushDispenser">
+          <button id="push" type="submit">1プッシュ</button>
+        </form>
+        <form id="gifChange">
+          <button id="reload" type="submit">reload</button>
+        </form>
+      </div>
+      <table id="parameter">
+        <tr align="center">
+          <th>気温</th>
+          <th>湿度</th>
+        </tr>
+        <tr align="center">
+          <td id="tmp">0</td>
+          <td id="hum">0</td>
+        </tr>
+      </table>
+    </div>
 
     <div id="loading">
       <div class="spinner"></div>
@@ -48,7 +48,7 @@
         setTimeout(()=>{
           const spinner = document.getElementById('loading');
           spinner.classList.add('loaded');
-        },60000);
+        },1000);
         //loadGif(accessCount);
       };
       
