@@ -10,7 +10,6 @@ const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル名
 
 function chat(server) {
-  boardDo;
     const sio = socketio.listen(server);
     sio.on('connection', function(socket) {
         socket.on('chat-message', function() {
@@ -32,8 +31,6 @@ function chat(server) {
         setInterval(()=>{
           console.log("  気温 : ");
           console.log("  湿度 : ");
-          // socket.emit('humi', hum);
-          // socket.emit('temp', tmp);
         },5000);
 
         socket.on('humUp',function(){
