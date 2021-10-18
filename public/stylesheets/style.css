@@ -32,21 +32,24 @@
   visibility: hidden;
 }
 
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; }
-#parameter th{
-  padding: 20px 10px;
-  border: solid 2px #0bd;
+body { font: 13px Helvetica, Arial; border: solid 1px black; }
+#image { width: 50%; height: 100%; border: solid 1px black; text-align: center; }
+#image #embryo_gif {width: 80%; height: auto; border: solid 1px black;}
+#parameter th{ padding: 20px 10px;  border: solid 2px #0bd; }
+#parameter td{ padding: 20px 10px;  border: solid 2px #0bd; }
+#buttons { width: 100%; display: flex;  justify-content: center; border: solid 1px black; }
+#buttons button { width: 100%; height: 50px; background: rgb(130, 224, 255); }
+#buttons  #gifStart{ width: 30%; border: solid 2px black; }
+#buttons #pushDispenser{ width: 30%; border: solid 1px black; }
+#buttons #gifChange{ width: 30%; border: solid 1px black; }
+
+
+/*メディアクエリ（PCファースト）*/
+@media screen and (max-width: 950px){
+  /*タブレット用CSS*/
 }
-#parameter td{
-  padding: 20px 10px;
-  border: solid 2px #0bd;
+@media screen and (max-width: 480px){
+  /*スマホ用CSS*/
 }
-#gifChange { background: #000; padding: 5px; position: fixed; bottom: 0; width: 100%; }
-#gifChange #reload { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#gifChange input   { border: 0; padding: 10px; width: 80%; margin: auto; }
-#gifChange #Send   { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
-#messages { margin-bottom: 40px }
