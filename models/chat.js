@@ -31,8 +31,6 @@ function chat(server) {
         setInterval(()=>{
           console.log("  気温 : ");
           console.log("  湿度 : ");
-          // socket.emit('humi', hum);
-          // socket.emit('temp', tmp);
         },5000);
 
         socket.on('humUp',function(){
