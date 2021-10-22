@@ -15,17 +15,18 @@ $(function() {
     });
 
     socket.on('temp', function(tmpBox){
-        timeTmp = tmp;
-        $('#tmp').text(timeTmp[timeTmp.length - 1]);
+        timeTmp = tmpBox;
+        $('#tmp').text(Math.round(timeTmp[timeTmp.length - 1]));
     });
 
     socket.on('humi', function(humBox){
-        timeHum = hum;
-        $('#hum').text(timeHum[timeHum.length - 1]);
+        timeHum = humBox;
+        $('#hum').text(Math.round(timeHum[timeHum.length - 1]));
     });
 
-    socket.on('time', function(time){
+    socket.on('nowTime', function(time){
         timeList = time;
+        $('#time').text(Math.round(timeList[timeList.length - 1]));
     });
 
     $('#pushDispenser').submit(function(){

@@ -25,8 +25,8 @@ function boardDo(server) {
     });
     bme280.on("data", function(e,data) {
         if( this.barometer.pressure >90 ){      //気圧の初回値が変なので、異常値は読み飛ばす
-          hum = Math.round(this.hygrometer.relativeHumidity);
-          tmp = Math.round(this.temperature.celsius);
+          hum = this.hygrometer.relativeHumidity;
+          tmp = this.temperature.celsius;
           //console.log("  celsius(摂氏)      : ", this.temperature.celsius);
           //console.log("  fahrenheit(華氏)   : ", this.temperature.fahrenheit);
           //console.log("  pressure(hPa)     : ", this.barometer.pressure *10);
