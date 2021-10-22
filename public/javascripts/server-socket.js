@@ -1,3 +1,7 @@
+let timeList;
+let timeHum;
+let timeTmp;
+
 $(function() {
     const socket = io();
     $('#gifChange').submit(function() {
@@ -10,12 +14,18 @@ $(function() {
         $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count-1)+'.gif');
     });
 
-    socket.on('humi', function(hum){
-        $('#hum').text(hum);
+    socket.on('temp', function(tmpBox){
+        timeTmp = tmp;
+        $('#tmp').text(timeTmp);
     });
 
-    socket.on('temp', function(tmp){
-        $('#tmp').text(tmp);
+    socket.on('humi', function(humBox){
+        timeHum = hum;
+        $('#hum').text(timeHum);
+    });
+
+    socket.on('time', function(time){
+        timeList = time;
     });
 
     $('#pushDispenser').submit(function(){
@@ -23,3 +33,6 @@ $(function() {
         return false;
     });
 });
+
+//時間が送られてきたら、timeHumとtimiTmpを使ってグラフを書く
+//グラフidは、humGraphとtmpGraph
