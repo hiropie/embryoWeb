@@ -5,29 +5,28 @@ const modify = require('./../public/javascripts/modify');
 const generator = require('./../public/javascripts/gif');
 
 var accessNum = 1;
-let count = 1;
 const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル
 
-const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
-let time = [];
-let humBox = [];
-let tmpBox = [];
-let count = 0;
+const board = new five.Board({port: "COM4"}); //ポート名指定はWindowsで必要なため、
+let time = []; //中身増える
+let humBox = []; //中身増える
+let tmpBox = []; //中身増える
+let NoT = 0; //カウントアップ
 
 function boardDo(server) {
   board.on('ready', function () {
-    var led = new five.Led(7);
-    var bme280 = new five.IMU({
+    let startTime = new Date();
+    const led = new five.Led(7);
+    const bme280 = new five.IMU({
         controller: "BME280",
         address: 0x76, // optional
     });
     bme280.on("data", function(e,data) {
         if( this.barometer.pressure >90 ){      //気圧の初回値が変なので、異常値は読み飛ばす
-          let startTime = new Date();
-          let hum = Math.round(this.hygrometer.relativeHumidity);
-          let tmp = Math.round(this.temperature.celsius);
+          hum = Math.round(this.hygrometer.relativeHumidity);
+          tmp = Math.round(this.temperature.celsius);
           //console.log("  celsius(摂氏)      : ", this.temperature.celsius);
           //console.log("  fahrenheit(華氏)   : ", this.temperature.fahrenheit);
           //console.log("  pressure(hPa)     : ", this.barometer.pressure *10);
@@ -57,25 +56,25 @@ function boardDo(server) {
             });
       });
       setInterval(()=>{
-        if(count < 59){
-          time[count] = startTime - new Date(); 
-          tmpBox[count] = tmp;
-          humBox[count] = hum;
+        if(NoT < 59){
+          time[NoT] = (new Date() - startTime) / 1000; 
+          tmpBox[NoT] = tmp;
+          humBox[NoT] = hum;
         }else{
           time.shift();
           tmpBox.shift();
           humBox.shift();
-          time[count] = startTime - new Date(); 
-          tmpBox[count] = tmp;
-          humBox[count] = hum;
+          time[NoT] = (new Date() - startTime) / 1000; 
+          tmpBox[NoT] = tmp;
+          humBox[NoT] = hum;
         }
-        console.log("時間 : ", time[count]);
+        console.log("時間 : ", time[NoT]);
         console.log("  気温 : ", tmp);
         console.log("  湿度 : ", hum);
-        socket.emit('temp', tmpBox); //配列に変更する
-        socket.emit('humi', humBox); //配列に変更する
+        socket.emit('temp', tmpBox); 
+        socket.emit('humi', humBox); 
         socket.emit('nowTime', time);
-        count++;
+        NoT++;
       },5000)
       socket.on('humUp', function(){
         console.log('led on');

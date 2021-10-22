@@ -16,12 +16,12 @@ $(function() {
 
     socket.on('temp', function(tmpBox){
         timeTmp = tmp;
-        $('#tmp').text(timeTmp);
+        $('#tmp').text(timeTmp[timeTmp.length - 1]);
     });
 
     socket.on('humi', function(humBox){
         timeHum = hum;
-        $('#hum').text(timeHum);
+        $('#hum').text(timeHum[timeHum.length - 1]);
     });
 
     socket.on('time', function(time){
