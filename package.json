@@ -17,6 +17,7 @@
     "express": "~4.16.1",
     "fs": "0.0.1-security",
     "gifencoder": "^2.0.1",
+    "highcharts": "^9.3.0",
     "http-errors": "~1.6.3",
     "johnny-five": "^2.1.0",
     "morgan": "~1.9.1",

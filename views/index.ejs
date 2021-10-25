@@ -22,22 +22,25 @@
       <div id="tmpGraph"></div>
       <table id="parameter">
         <tr align="center">
+          <th>時間</th>
           <th>気温[℃]</th>
           <th>湿度[%]</th>
-          <th>time[s]</th>
         </tr>
         <tr align="center">
-          <td id="tmp">0</td>
-          <td id="hum">0</td>
           <td id="time">0</td>
+          <td id="hum">0</td>
+          <td id="tmp">0</td>
         </tr>
       </table>
     </div>
+
+    <div id="container" style="width:50%; height:200px;"></div>
 
     <div id="loading">
       <div class="spinner"></div>
     </div>
 
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
@@ -47,7 +50,6 @@
     <script src="javascripts/server-socket.js"></script>
     <script>
       var accessCount = 1;
-
       window.onload = ()=>{
         setTimeout(()=>{
           const spinner = document.getElementById('loading');
@@ -59,6 +61,45 @@
         nowSrc = $('img').attr('src');
         $('img').attr('src', nowSrc);
       });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var myChart = Highcharts.chart('container', {
+        chart: {
+           type: 'line',
+        },
+        title: {
+            // text: 'Fruit Consumption'
+        },
+        xAxis: {
+          gridLineWidth: 1,
+          type: 'datatype',
+          dataTimeLabelFormats: {
+            second: '%H:%M:%S',
+            minute: '%H:%M',
+            hour: '%m/%e %H:%M',
+            day: '%y/%m/%e',
+            week: '%y/%m/%e',
+            month: '%Y/%m',
+            year: '(%Y)' 
+          },
+          min: 0
+            // categories: ['Apples', 'Bananas', 'Oranges']
+          
+        },
+        yAxis: {
+          gridLineWidth: 1,
+          type: 'linear'
+            // title: {
+            //     text: 'Fruit eaten'
+            // }
+        },
+        series: [{
+            name: 'humidity',
+            data: [0]
+          }
+        ]
+      });
+    });
     </script>
   </body>
 </html>

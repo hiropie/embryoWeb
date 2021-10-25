@@ -1,6 +1,7 @@
 let timeList;
 let timeHum;
 let timeTmp;
+let now;
 
 $(function() {
     const socket = io();
@@ -24,10 +25,14 @@ $(function() {
 
     socket.on('nowTime', function(time){
         timeList = time;
-        $('#time').text(Math.round(timeList[timeList.length - 1]));
+        now = toHour(Math.round(timeList[timeList.length - 1]));        
+        $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
         $('#tmp').text(Math.round(timeTmp[timeTmp.length - 1]));
         $('#hum').text(Math.round(timeHum[timeHum.length - 1]));
         // ここでグラフを描く
+
+       
+
         // グラフのidはhumGraph,tmpGrap
     });
 
@@ -36,6 +41,18 @@ $(function() {
         return false;
     });
 });
+
+function toHour(time){
+    let sec = (time % 60) % 60;
+    let min = Math.floor(time / 60) % 60;
+    let hour = Math.floor(time / 3600);
+    
+    return{
+        hour : hour,
+        min: min,
+        sec: sec
+    }
+}
 
 //時間が送られてきたら、timeHumとtimiTmpを使ってグラフを書く
 //グラフidは、humGraphとtmpGraph
