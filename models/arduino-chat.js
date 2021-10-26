@@ -57,6 +57,8 @@ function boardDo(server) {
               })
             });
       });
+
+
       setInterval(()=>{
         if(NoT < 899){
           time[NoT] = (new Date() - startTime) / 1000; 
@@ -80,6 +82,7 @@ function boardDo(server) {
         NoT++;
       },2000)
 
+      
       socket.on('humUp', function(){
         console.log('web Open');
         ben.on();

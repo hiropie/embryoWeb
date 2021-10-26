@@ -32,16 +32,16 @@
       </table>
     </div>
 
-    <div id="humGraph" class="graph"></div>
-    <div class="spacer"></div>
     <div id="tmpGraph" class="graph"></div>
+    <div class="spacer"></div>
+    <div id="humGraph" class="graph"></div>
 
     <div id="loading">
       <div class="spinner"></div>
     </div>
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -67,62 +67,6 @@
         nowSrc = $('img').attr('src');
         $('img').attr('src', nowSrc);
       });
-
-
-    $(document).ready(function () {
-      let op1 = {
-        chart: {
-          renderTo: tmpGraph,
-          type: 'line',
-        },
-        title: {
-        },
-        xAxis: {
-          gridLineWidth: 1,
-          // labels: {
-          //   step: 30
-          // },
-          min: 0
-        },
-        yAxis: {
-          min: 20,
-          gridLineWidth: 1,
-          type: 'linear'
-        },
-        series: [{
-            name: 'temperture',
-            data: []
-        }]
-      };
-
-      let op2 = {
-        chart: {
-           type: 'line',
-        },
-        title: {
-        },
-        xAxis: {
-          gridLineWidth: 1,
-          // labels: {
-          //   step: 30
-          // },
-          min: 0
-        },
-        yAxis: {
-          min: 20,
-          gridLineWidth: 1,
-          type: 'linear'
-        },
-        series: [{
-            name: 'humidity',
-            data: []
-          }
-        ]
-      };
-
-      let tmpChart = new Highcharts.Chart(op1);
-      let humChart = new Highcharts.Chart(op2);
-    });
     </script>
   </body>
 </html>

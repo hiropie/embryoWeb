@@ -1,6 +1,3 @@
-
-const { chart } = require("highcharts");
-
 let dataT = [];
 let dataH = [];
 let timeList;
@@ -11,6 +8,9 @@ let now;
 let num = 0;
 
 $(function() {
+    let tmpChart = new Highcharts.Chart(op1);
+    let humChart = new Highcharts.Chart(op2);
+
     const socket = io();
     $('#gifChange').submit(function() {
         socket.emit('chat-message', $('#reload').val());
@@ -23,12 +23,13 @@ $(function() {
     });
 
     socket.on('temp', function(tmp){
-        nowTmp = tmp;
+        timeTmp = tmp;
     });
 
     socket.on('humi', function(hum){
-        nowHum = hum;
+        timeHum = hum;
     });
+
 
     socket.on('nowTime', function(time){
         timeList = time;
@@ -45,11 +46,71 @@ $(function() {
         return false;
     });
 
-    // setInterval(()=>{
-    //     reChart(dataT, dataH);
-    // },10000)
+    setInterval(()=>{
+        reChart(dataT, dataH);
+    },10000)
 
 });
+
+function reChart(dataT,dataH){
+    tmpChart.destroy();
+    humChart.destroy();
+    op1.series = dataT;
+    op2.series = dataH;
+    tmpChart = new Highcharts.Chart(op1);
+    humChart = new Highcharts.Chart(op2);
+}
+
+let op1 = {
+    chart: {
+      renderTo: tmpGraph,
+      type: 'line',
+    },
+    title: {
+    },
+    xAxis: {
+      gridLineWidth: 1,
+      // labels: {
+      //   step: 30
+      // },
+      min: 0
+    },
+    yAxis: {
+      min: 20,
+      gridLineWidth: 1,
+      type: 'linear'
+    },
+    series: [{
+        name: 'temperture',
+        data: []
+    }]
+  };
+
+  let op2 = {
+    chart: {
+      renderTo: humGraph,
+       type: 'line',
+    },
+    title: {
+    },
+    xAxis: {
+      gridLineWidth: 1,
+      // labels: {
+      //   step: 30
+      // },
+      min: 0
+    },
+    yAxis: {
+      min: 20,
+      gridLineWidth: 1,
+      type: 'linear'
+    },
+    series: [{
+        name: 'humidity',
+        data: []
+      }
+    ]
+  };
 
 function toHour(time){
     let sec = (time % 60) % 60;
@@ -62,15 +123,5 @@ function toHour(time){
         sec: sec
     }
 }
-
-// function reChart(dataT,dataH){
-//     tmpChart.destrpy();
-//     humChart.destrpy();
-//     op1.series = dataT;
-//     op2.series = dataH;
-//     tmpChart = new Highcharts.Chart(op1);
-//     humChart = new Highcharts.Chart(op2);
-// }
-
 //時間が送られてきたら、timeHumとtimiTmpを使ってグラフを書く
 //グラフidは、humGraphとtmpGraph
