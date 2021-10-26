@@ -18,7 +18,8 @@ let NoT = 0; //カウントアップ
 function boardDo(server) {
   board.on('ready', function () {
     let startTime = new Date();
-    const led = new five.Led(7);
+    const push = new five.Led(7);
+    const ben  = new five.Led(6);
     const bme280 = new five.IMU({
         controller: "BME280",
         address: 0x76, // optional
@@ -39,6 +40,7 @@ function boardDo(server) {
     var sio = socketio.listen(server);
     sio.on('connection', function(socket) {
 
+
       socket.on('chat-message', function() {
           accessNum++;
           console.log('Send message to client accessNum: '+accessNum);
@@ -56,7 +58,7 @@ function boardDo(server) {
             });
       });
       setInterval(()=>{
-        if(NoT < 359){
+        if(NoT < 899){
           time[NoT] = (new Date() - startTime) / 1000; 
           tmpBox[NoT] = tmp;
           humBox[NoT] = hum;
@@ -71,19 +73,39 @@ function boardDo(server) {
         console.log("時間 : ", time[NoT]);
         console.log("  気温 : ", tmp);
         console.log("  湿度 : ", hum);
+
         socket.emit('temp', tmpBox); 
         socket.emit('humi', humBox); 
         socket.emit('nowTime', time);
         NoT++;
-      },5000)
+      },2000)
+
       socket.on('humUp', function(){
-        console.log('led on');
-        led.on();
+        console.log('web Open');
+        ben.on();
+        console.log('push start');
+        push.on();
         setTimeout(() => {
-          console.log('led off');
-          led.off();
+          console.log('push end');
+          push.off();
+          console.log('web close');
+          ben.off();
         },500);
       })
+
+      setInterval(()=>{
+        console.log('time Open');
+        ben.on();
+        console.log('push start');
+        push.on();
+        setTimeout(() => {
+          console.log('push end');
+          push.off();
+          console.log('time close');
+          ben.off();
+        },500);
+      },900000)
+
       socket.on("disconnect", function() {
       });
     });

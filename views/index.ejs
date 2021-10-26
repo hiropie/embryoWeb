@@ -18,8 +18,6 @@
           <button id="reload" type="submit">reload</button>
         </form>
       </div>
-      <div id="humGraph"></div>
-      <div id="tmpGraph"></div>
       <table id="parameter">
         <tr align="center">
           <th>時間</th>
@@ -34,7 +32,9 @@
       </table>
     </div>
 
-    <div id="container" style="width:50%; height:200px;"></div>
+    <div id="humGraph" class="graph"></div>
+    <div class="spacer"></div>
+    <div id="tmpGraph" class="graph"></div>
 
     <div id="loading">
       <div class="spinner"></div>
@@ -49,6 +49,12 @@
         crossorigin="anonymous"></script>
     <script src="javascripts/server-socket.js"></script>
     <script>
+      let data;
+      let chartH;
+      let chartT;
+      let date = new Array();
+      let humG = new Array();
+      let tmpG = new Array();
       var accessCount = 1;
       window.onload = ()=>{
         setTimeout(()=>{
@@ -61,45 +67,74 @@
         nowSrc = $('img').attr('src');
         $('img').attr('src', nowSrc);
       });
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var myChart = Highcharts.chart('container', {
-        chart: {
-           type: 'line',
-        },
-        title: {
-            // text: 'Fruit Consumption'
-        },
-        xAxis: {
-          gridLineWidth: 1,
-          type: 'datatype',
-          dataTimeLabelFormats: {
-            second: '%H:%M:%S',
-            minute: '%H:%M',
-            hour: '%m/%e %H:%M',
-            day: '%y/%m/%e',
-            week: '%y/%m/%e',
-            month: '%Y/%m',
-            year: '(%Y)' 
-          },
-          min: 0
-            // categories: ['Apples', 'Bananas', 'Oranges']
-          
-        },
-        yAxis: {
-          gridLineWidth: 1,
-          type: 'linear'
-            // title: {
-            //     text: 'Fruit eaten'
-            // }
-        },
-        series: [{
-            name: 'humidity',
-            data: [0]
-          }
-        ]
-      });
-    });
+      
+      // $(document).ready(function() {
+      //   $.getJSON('/javascripts/output.json', function(data) {
+      //     var dataLength = data.length;
+      //     for(var i = 0; i < dataLength; i++){  
+      //       tmpG.push( [data[i][0], data[i][1]] );
+      //       humG.push( [data[i][0], data[i][2]] );
+      //     };
+    
+      //     chartT = new Highcharts.Chart({
+      //       chart: {
+      //         renderTo: 'tmpGraph',
+      //       },   
+      //       title: {
+      //         text: 'Tmp History'
+      //       },
+      //       credits: {
+      //         text: ''
+      //       },
+      //       xAxis: {
+      //         categories: date,
+      //         labels: {
+      //             step: 30,
+      //         }
+      //       },    
+      //       yAxis: {
+      //         min: 0,
+      //         title: {
+      //             text: '℃'
+      //         }
+      //       },
+      //       series: [{
+      //           type: 'area',
+      //           name: 'tmp',
+      //           data: tmpG
+      //       }]
+      //     });
+        
+      //     chartH = new Highcharts.Chart({
+      //       chart: {
+      //         renderTo: 'humGraph',
+      //       },   
+      //       title: {
+      //         text: 'Hum History'
+      //       },
+      //       credits: {
+      //         text: ''
+      //       },
+      //       xAxis: {
+      //         categories: date,
+      //         labels: {
+      //             step: 30,
+      //         }
+      //       },    
+      //       yAxis: {
+      //         min: 0,
+      //         title: {
+      //             text: '%'
+      //         }
+      //       },
+      //       series: [{
+      //           type: 'area',
+      //           name: 'hum',
+      //           data: humG
+      //       }]
+      //     });
+      //   });
+      // }); 
     </script>
   </body>
 </html>

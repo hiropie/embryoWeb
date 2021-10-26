@@ -1,7 +1,8 @@
-let timeList;
-let timeHum;
-let timeTmp;
+let dataBox = [];
 let now;
+let nowTmp;
+let nowHum;
+let num = 0;
 
 $(function() {
     const socket = io();
@@ -15,25 +16,26 @@ $(function() {
         $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count-1)+'.gif');
     });
 
-    socket.on('temp', function(tmpBox){
-        timeTmp = tmpBox;
+    socket.on('temp', function(tmp){
+        nowTmp = tmp;
     });
 
-    socket.on('humi', function(humBox){
-        timeHum = humBox;
+    socket.on('humi', function(hum){
+        nowHum = hum;
     });
 
-    socket.on('nowTime', function(time){
-        timeList = time;
-        now = toHour(Math.round(timeList[timeList.length - 1]));        
+    socket.on('nowData', function(time){
+        dataBox.push([time, nowTmp, nowHum]);
+        now = toHour(Math.round(time));        
         $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
-        $('#tmp').text(Math.round(timeTmp[timeTmp.length - 1]));
-        $('#hum').text(Math.round(timeHum[timeHum.length - 1]));
+        $('#tmp').text(Math.round(nowTmp));
+        $('#hum').text(Math.round(nowHum));
         // ここでグラフを描く
 
        
 
         // グラフのidはhumGraph,tmpGrap
+        num++;
     });
 
     $('#pushDispenser').submit(function(){
