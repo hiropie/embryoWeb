@@ -1,3 +1,4 @@
+
 const { chart } = require("highcharts");
 
 let dataT = [];
@@ -6,6 +7,7 @@ let timeList;
 let timeHum;
 let timeTmp;
 let now;
+
 let num = 0;
 
 $(function() {
@@ -20,12 +22,12 @@ $(function() {
         $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count-1)+'.gif');
     });
 
-    socket.on('temp', function(tmpBox){
-        timeTmp = tmpBox;
+    socket.on('temp', function(tmp){
+        nowTmp = tmp;
     });
 
-    socket.on('humi', function(humBox){
-        timeHum = humBox;
+    socket.on('humi', function(hum){
+        nowHum = hum;
     });
 
     socket.on('nowTime', function(time){

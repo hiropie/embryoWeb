@@ -1,0 +1,120 @@
+      Highcharts.setOptions({
+        global: {
+        useUTC: false
+        }
+      });
+    
+    $(document).ready(function(){
+      // $.getJSON('/javascripts/output.json',function(data){
+      //   let dataLength = data.length;
+      //   for (let i = 0; i < dataLength; i++){
+      //     date[i] = data[0][i];
+      //     tmpG[i] = data[1][i]; 
+      //     humG[i] = data[2][i]; 
+      //   };
+      firsttime = true;
+        chartT = new Highcharts.Chart({
+          chart: {
+            renderTo: 'tmpGarph',
+            type: 'line',
+            events: {
+              load: requestDataT
+            }
+          },
+          xAxis: {
+            labels: {
+              step: 30
+            }
+            // type: 'datetime',
+            // dateTimeLabelFormats: {
+            //     second: '%H:%M:%S',
+            //     minute: '%H:%M',
+            //     hour: '%m/%e %H:%M',
+            //     day: '%y/%m/%e',
+            //     week: '%y/%m/%e',
+            //     month: '%Y/%m',
+            //     year: '(%Y)'
+            // }
+          },
+          yAxis: {
+            min: 0,
+          },
+          // tooltip: {
+          //   // グラフ上にマウスカーソルを持っていった場合の表示
+          //   formatter: function() {
+          //       return '<b>'+ this.series.name +'</b><br/>'+
+          //           Highcharts.dateFormat('%m月%e日%H時%M分 ', this.x) + 
+          //           ': ' + this.y +'℃';
+          //   }
+          // },
+          series: {
+            data: []
+          }
+        })
+      })
+    // })
+
+    function requestDataT(){
+      $.ajax({
+        // JSONデータを読み込む相対URL
+        url: '/javascripts/output.json',
+        // 成功した場合、Highcharts JSのAPIを用いてデータを設定
+        // (データの参照はseries.dataで可能だが更新はAPIが必要)
+        success: function(points) {
+            let series = chartH.series[0];
+            // JSON形式で転送されてきた配列のデータは、
+            // pointsという変数に入っているので、
+            // 最新のものをlastpoint変数に取得
+            var lastpoint = points.pop();
+            if (firsttime5m) {
+                // 完全初期化の場合
+                // JSONデータの全てをグラフに追加する
+                for (var i in points) {
+                    series.addPoint(points[i], false, false);
+                }
+                // 最後に、最新のデータを入れるタイミングでグラフを再描画する
+                // (addPoint()の第2引数はredraw)
+                series.addPoint(lastpoint, true, false);
+                firsttime5m = false;
+            }
+            else {
+                // 差分更新の場合
+                // JSONデータについて、最新以外のすべてのデータが
+                // 既にグラフ上に存在しているかをそれぞれチェック
+                for (var i in points) {
+                    var seen = false;
+                    for (var j in series.data) {
+                        if (series.data[j].x == points[i][0]) {
+                            seen = true;
+                            break;
+                        }
+                    }
+                    // 存在していなければAPIで該当データを追加
+                    // 再描画や古いデータの削除は行わない
+                    if (!seen) {
+                        series.addPoint(points[i], false, false);
+                    }
+                }
+                // JSONデータの最新のものが、
+                // 既にグラフ上に存在しているかどうかをチェック
+                var seen = false;
+                for (var i in series.data) {
+                    if (series.data[i].x == lastpoint[0]) {
+                        seen = true;
+                        break;
+                    }
+                }
+                // 存在していなければ最新データを追加する
+                // 追加時に、最古のデータは削除される
+                // (addPoint()の第2引数はredraw, 第3引数はshift)
+                if (!seen) {
+                    series.addPoint(lastpoint, true, true);
+                }
+            }
+            // 150秒ごとにこの関数は呼び出される
+            setTimeout(requestDataT, 30*1000);
+        },
+        // Ajaxデータの読み込み時にキャッシュしないようにする
+        cache: false
+    });
+    }

@@ -49,6 +49,12 @@
         crossorigin="anonymous"></script>
     <script src="javascripts/web-socket.js"></script>
     <script>
+      let data;
+      let chartH;
+      let chartT;
+      let date = new Array();
+      let humG = new Array();
+      let tmpG = new Array();
       var accessCount = 1;
       window.onload = ()=>{
         setTimeout(()=>{
@@ -61,6 +67,7 @@
         nowSrc = $('img').attr('src');
         $('img').attr('src', nowSrc);
       });
+
 
     $(document).ready(function () {
       let op1 = {
