@@ -1,7 +1,12 @@
+const { chart } = require("highcharts");
+
+let dataT = [];
+let dataH = [];
 let timeList;
 let timeHum;
 let timeTmp;
 let now;
+let num = 0;
 
 $(function() {
     const socket = io();
@@ -25,21 +30,23 @@ $(function() {
 
     socket.on('nowTime', function(time){
         timeList = time;
+        dataT.push([timeList[timeList.length - 1], timeTmp[timeTmp.length - 1]]);
+        dataH.push([timeList[timeList.length - 1], timeHum[timeHum.length - 1]]);
         now = toHour(Math.round(timeList[timeList.length - 1]));        
         $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
-        $('#tmp').text(Math.round(timeTmp[timeTmp.length - 1]));
-        $('#hum').text(Math.round(timeHum[timeHum.length - 1]));
-        // ここでグラフを描く
-
-       
-
-        // グラフのidはhumGraph,tmpGrap
+        $('#tmp').text(Math.round(dataT[dataT.length-1][1]));
+        $('#hum').text(Math.round(dataH[dataH.length-1][1]));
     });
 
     $('#pushDispenser').submit(function(){
         socket.emit('humUp', $('#push').val());
         return false;
     });
+
+    // setInterval(()=>{
+    //     reChart(dataT, dataH);
+    // },10000)
+
 });
 
 function toHour(time){
@@ -53,6 +60,15 @@ function toHour(time){
         sec: sec
     }
 }
+
+// function reChart(dataT,dataH){
+//     tmpChart.destrpy();
+//     humChart.destrpy();
+//     op1.series = dataT;
+//     op2.series = dataH;
+//     tmpChart = new Highcharts.Chart(op1);
+//     humChart = new Highcharts.Chart(op2);
+// }
 
 //時間が送られてきたら、timeHumとtimiTmpを使ってグラフを書く
 //グラフidは、humGraphとtmpGraph

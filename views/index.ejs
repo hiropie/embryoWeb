@@ -18,8 +18,6 @@
           <button id="reload" type="submit">reload</button>
         </form>
       </div>
-      <div id="humGraph"></div>
-      <div id="tmpGraph"></div>
       <table id="parameter">
         <tr align="center">
           <th>時間</th>
@@ -28,13 +26,15 @@
         </tr>
         <tr align="center">
           <td id="time">0</td>
-          <td id="hum">0</td>
           <td id="tmp">0</td>
+          <td id="hum">0</td>
         </tr>
       </table>
     </div>
 
-    <div id="container" style="width:50%; height:200px;"></div>
+    <div id="humGraph" class="graph"></div>
+    <div class="spacer"></div>
+    <div id="tmpGraph" class="graph"></div>
 
     <div id="loading">
       <div class="spinner"></div>
@@ -47,7 +47,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
         crossorigin="anonymous"></script>
-    <script src="javascripts/server-socket.js"></script>
+    <script src="javascripts/web-socket.js"></script>
     <script>
       var accessCount = 1;
       window.onload = ()=>{
@@ -62,43 +62,59 @@
         $('img').attr('src', nowSrc);
       });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      var myChart = Highcharts.chart('container', {
+    $(document).ready(function () {
+      let op1 = {
+        chart: {
+          renderTo: tmpGraph,
+          type: 'line',
+        },
+        title: {
+        },
+        xAxis: {
+          gridLineWidth: 1,
+          // labels: {
+          //   step: 30
+          // },
+          min: 0
+        },
+        yAxis: {
+          min: 20,
+          gridLineWidth: 1,
+          type: 'linear'
+        },
+        series: [{
+            name: 'temperture',
+            data: []
+        }]
+      };
+
+      let op2 = {
         chart: {
            type: 'line',
         },
         title: {
-            // text: 'Fruit Consumption'
         },
         xAxis: {
           gridLineWidth: 1,
-          type: 'datatype',
-          dataTimeLabelFormats: {
-            second: '%H:%M:%S',
-            minute: '%H:%M',
-            hour: '%m/%e %H:%M',
-            day: '%y/%m/%e',
-            week: '%y/%m/%e',
-            month: '%Y/%m',
-            year: '(%Y)' 
-          },
+          // labels: {
+          //   step: 30
+          // },
           min: 0
-            // categories: ['Apples', 'Bananas', 'Oranges']
-          
         },
         yAxis: {
+          min: 20,
           gridLineWidth: 1,
           type: 'linear'
-            // title: {
-            //     text: 'Fruit eaten'
-            // }
         },
         series: [{
             name: 'humidity',
-            data: [0]
+            data: []
           }
         ]
-      });
+      };
+
+      let tmpChart = new Highcharts.Chart(op1);
+      let humChart = new Highcharts.Chart(op2);
     });
     </script>
   </body>

@@ -53,3 +53,13 @@ body { font: 13px Helvetica, Arial; border: solid 1px black; }
 @media screen and (max-width: 480px){
   /*スマホ用CSS*/
 }
+
+.spacer{
+  height: 10px;
+}
+
+.graph{
+  height: 400px;
+  width: 100%;
+  border: solid 1px red;
+}
