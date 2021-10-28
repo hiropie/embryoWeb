@@ -96,6 +96,11 @@ $(function(){
     let chart1 = new Highcharts.Chart("tmpGraph", options);
     let chart2 = new Highcharts.Chart("humGraph", options);
 
+    $('#gifStart').click(function(){
+        options.series[0].data = [3, 10, 2, 10, 3, 10];
+        chart2 = new Highcharts.Chart("humGraph", options);
+      });
+
     $('#change').click(function(){
         options.series[0].data = [3, 10, 2, 10, 3, 10];
         chart1 = new Highcharts.Chart("tmpGraph", options);

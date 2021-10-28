@@ -73,13 +73,13 @@ function boardDo(server) {
           tmpBox[NoT] = tmp;
           humBox[NoT] = hum;
         }
-        console.log("  時間 : ", dataBox[0][NoT]);
+        console.log("  時間 : ", time);
         console.log("  気温 : ", tmp);
         console.log("  湿度 : ", hum);
 
         socket.emit('temp', tmpBox); 
         socket.emit('humi', humBox); 
-        socket.emit('nowTime', dataBox[0]);
+        socket.emit('nowTime', time);
         NoT++;
       },2000)
 
@@ -109,6 +109,10 @@ function boardDo(server) {
           ben.off();
         },500);
       },900000)
+
+      setInterval(()=>{
+        socket.emit('reDraw', )
+      },100000)
 
       socket.on("disconnect", function() {
       });
