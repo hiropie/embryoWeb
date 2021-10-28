@@ -43,30 +43,10 @@ $(function() {
         return false;
     });
 
-    // setInterval(()=>{
-    //     reChart(dataT, dataH);
-    // },10000)
-
-    // $('#gifStart').click(function(){
-    //   reChart(dataT,dataH);
-    // });
-
-});
-
-// function reChart(dataT,dataH){
-//     let chart1 = $('#tmpGraph').highcharts();
-//     let chart2 = $('#humGraph').highcharts();
-//     chart1.series.setData = dataT;
-//     chart2.series.setData = dataH;
-//     chart1.redraw();
-//     chart2.redraw();
-// }
-
-$(function(){
     var options = {
-            chart: {
-                // renderTo: 'tmpGraph',　
-            },
+        chart: {
+            // renderTo: 'tmpGraph',　
+        },
         title: {
             text: 'Title'
         },
@@ -96,15 +76,15 @@ $(function(){
     let chart1 = new Highcharts.Chart("tmpGraph", options);
     let chart2 = new Highcharts.Chart("humGraph", options);
 
-    $('#gifStart').click(function(){
+    socket.on("reDraw",function(){
         options.series[0].data = [3, 10, 2, 10, 3, 10];
         chart2 = new Highcharts.Chart("humGraph", options);
-      });
+    });
 
     $('#change').click(function(){
         options.series[0].data = [3, 10, 2, 10, 3, 10];
         chart1 = new Highcharts.Chart("tmpGraph", options);
-      });
+    });
 });
 
 function toHour(time){
