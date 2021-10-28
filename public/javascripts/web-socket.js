@@ -7,6 +7,68 @@ let now;
 
 let num = 0;
 
+let optionsT = {
+    chart: {
+        // renderTo: 'tmpGraph',　
+    },
+    title: {
+        text: 'Title'
+    },
+    subtitle: {
+        text: 'SubTitle'
+    },
+    xAxis: [{
+　　title: {
+            text: '時刻',         
+        },
+        categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00' ],
+    }],
+    yAxis: [{ // Primary yAxis
+        title: {
+            text: '気温',
+        }
+    }],
+    series: [{
+        name: '気温',
+        type: 'line',
+        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5],
+        tooltip: {
+            valueSuffix: ' ℃' 
+        }
+    }]
+};
+
+let optionsH = {
+    chart: {
+        // renderTo: 'tmpGraph',　
+    },
+    title: {
+        text: 'Title'
+    },
+    subtitle: {
+        text: 'SubTitle'
+    },
+    xAxis: [{
+　　    title: {
+            text: '時刻',         
+        },
+        categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00' ],
+    }],
+    yAxis: [{ // Primary yAxis
+        title: {
+            text: '気温',
+        }
+    }],
+    series: [{
+        name: '湿度',
+        type: 'line',
+        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5],
+        tooltip: {
+            valueSuffix: ' ℃' 
+        }
+    }]
+};
+
 $(function() {
     const socket = io();
     $('#gifChange').submit(function() {
@@ -43,47 +105,22 @@ $(function() {
         return false;
     });
 
-    var options = {
-        chart: {
-            // renderTo: 'tmpGraph',　
-        },
-        title: {
-            text: 'Title'
-        },
-        subtitle: {
-            text: 'SubTitle'
-        },
-        xAxis: [{
-    　　title: {
-                text: '時刻',         
-            },
-            categories: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00' ],
-        }],
-        yAxis: [{ // Primary yAxis
-            title: {
-                text: '気温',
-            }
-        }],
-        series: [{
-            name: '気温',
-            type: 'spline',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5],
-            tooltip: {
-                valueSuffix: ' ℃' 
-            }
-        }]
-    };
-    let chart1 = new Highcharts.Chart("tmpGraph", options);
-    let chart2 = new Highcharts.Chart("humGraph", options);
+    let chart1 = new Highcharts.Chart("tmpGraph", optionsT);
+    let chart2 = new Highcharts.Chart("humGraph", optionsH);
 
     socket.on("reDraw",function(){
-        options.series[0].data = [3, 10, 2, 10, 3, 10];
-        chart2 = new Highcharts.Chart("humGraph", options);
+        optionsH.xAxis[0].categories = timeList;
+        optionsH.series[0].data = timeHum;
+        chart2 = new Highcharts.Chart("humGraph", optionsH);
+
+        optionsT.xAxis[0].categories = timeList;
+        optionsT.series[0].data = timeTmp;
+        chart1 = new Highcharts.Chart('tmpGraph', optionsT);
     });
 
     $('#change').click(function(){
-        options.series[0].data = [3, 10, 2, 10, 3, 10];
-        chart1 = new Highcharts.Chart("tmpGraph", options);
+        optionsT.series[0].data = [3, 10, 2, 10, 3, 10];
+        chart1 = new Highcharts.Chart("tmpGraph", optionsT);
     });
 });
 
