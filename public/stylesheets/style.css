@@ -41,9 +41,11 @@ body { font: 13px Helvetica, Arial; border: solid 1px black; }
 #parameter td{ padding: 20px 10px;  border: solid 2px #0bd; }
 #buttons { width: 100%; display: flex;  justify-content: center; border: solid 1px black; }
 #buttons button { width: 100%; height: 50px; background: rgb(130, 224, 255); }
+#buttons  #change{ width: 30%; border: solid 2px black; }
 #buttons  #gifStart{ width: 30%; border: solid 2px black; }
 #buttons #pushDispenser{ width: 30%; border: solid 1px black; }
 #buttons #gifChange{ width: 30%; border: solid 1px black; }
+
 
 
 /*メディアクエリ（PCファースト）*/

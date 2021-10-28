@@ -13,6 +13,7 @@ const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで�
 let time = []; //中身増える
 let humBox = []; //中身増える
 let tmpBox = []; //中身増える
+let dataBox = [time, tmpBox, humBox];
 let NoT = 0; //カウントアップ
 
 function boardDo(server) {
@@ -72,13 +73,13 @@ function boardDo(server) {
           tmpBox[NoT] = tmp;
           humBox[NoT] = hum;
         }
-        console.log("時間 : ", time[NoT]);
+        console.log("  時間 : ", dataBox[0][NoT]);
         console.log("  気温 : ", tmp);
         console.log("  湿度 : ", hum);
 
         socket.emit('temp', tmpBox); 
         socket.emit('humi', humBox); 
-        socket.emit('nowTime', time);
+        socket.emit('nowTime', dataBox[0]);
         NoT++;
       },2000)
 

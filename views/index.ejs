@@ -10,6 +10,7 @@
     <div id="image">
       <img  src="/images/basis/first.png" id="embryo_gif" width="720" height="480"> 
       <div id="buttons">
+        <button id="change">更新</button>
         <button id="gifStart">再生</button>
         <form id="pushDispenser">
           <button id="push" type="submit">1プッシュ</button>
@@ -41,7 +42,8 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+    <script src="javascripts/highstock.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -49,12 +51,6 @@
         crossorigin="anonymous"></script>
     <script src="javascripts/web-socket.js"></script>
     <script>
-      let data;
-      let chartH;
-      let chartT;
-      let date = new Array();
-      let humG = new Array();
-      let tmpG = new Array();
       var accessCount = 1;
       window.onload = ()=>{
         setTimeout(()=>{
