@@ -38,9 +38,47 @@ function boardDo(server) {
         }
     });
     
+    setTimeout(function array(){
+      if(NoT < 899){
+        time[NoT] = (new Date() - startTime) / 1000; 
+        tmpBox[NoT] = tmp;
+        humBox[NoT] = hum;
+      }else{
+        time.shift();
+        tmpBox.shift();
+        humBox.shift();
+        time[NoT] = (new Date() - startTime) / 1000; 
+        tmpBox[NoT] = tmp;
+        humBox[NoT] = hum;
+      }
+      console.log("  時間 : <", time[NoT], ">");
+      console.log("  気温 : ", tmp);
+      console.log("  湿度 : ", hum);
+      NoT++;
+      setTimeout(array,5000);
+    },5000)
+
+    // setInterval(()=>{
+    //   console.log('time Open');
+    //   ben.on();
+    //   console.log('push start');
+    //   push.on();
+    //   setTimeout(() => {
+    //     console.log('push end');
+    //     push.off();
+    //     console.log('time close');
+    //     ben.off();
+    //   },500);
+    // },900000)
+
     var sio = socketio.listen(server);
     sio.on('connection', function(socket) {
-
+      console.log('connect!!!');
+      socket.emit('reDraw', time);
+      console.log("send");
+      socket.emit('temp', tmpBox); 
+      socket.emit('humi', humBox); 
+      socket.emit('nowTime', time);
 
       socket.on('chat-message', function() {
           accessNum++;
@@ -59,31 +97,15 @@ function boardDo(server) {
             });
       });
 
+      socket.on('draw', function(){
+        console.log('sent');
+        setTimeout(function send(){
+          socket.emit('temp', tmpBox); 
+          socket.emit('humi', humBox); 
+          socket.emit('nowTime', time);
+        },5000)
+      })
 
-      setInterval(()=>{
-        if(NoT < 899){
-          time[NoT] = (new Date() - startTime) / 1000; 
-          tmpBox[NoT] = tmp;
-          humBox[NoT] = hum;
-        }else{
-          time.shift();
-          tmpBox.shift();
-          humBox.shift();
-          time[NoT] = (new Date() - startTime) / 1000; 
-          tmpBox[NoT] = tmp;
-          humBox[NoT] = hum;
-        }
-        console.log("  時間 : <", time[NoT], ">");
-        console.log("  気温 : ", tmp);
-        console.log("  湿度 : ", hum);
-
-        socket.emit('temp', tmpBox); 
-        socket.emit('humi', humBox); 
-        socket.emit('nowTime', time);
-        NoT++;
-      },2000)
-
-      
       socket.on('humUp', function(){
         console.log('web Open');
         ben.on();
@@ -97,18 +119,7 @@ function boardDo(server) {
         },500);
       })
 
-      setInterval(()=>{
-        console.log('time Open');
-        ben.on();
-        console.log('push start');
-        push.on();
-        setTimeout(() => {
-          console.log('push end');
-          push.off();
-          console.log('time close');
-          ben.off();
-        },500);
-      },900000)
+
 
       setInterval(()=>{
         socket.emit('reDraw', time);
