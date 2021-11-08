@@ -1,5 +1,5 @@
 //specify the interval time in seconds 
-var interval = 1;
+var interval = 2;
 
 //specify the path to which screenshots are to be stored
 var imgPath = 'screenshots';
