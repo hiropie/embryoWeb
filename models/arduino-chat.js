@@ -74,11 +74,7 @@ function boardDo(server) {
     var sio = socketio.listen(server);
     sio.on('connection', function(socket) {
       console.log('connect!!!');
-      socket.emit('reDraw', time);
-      console.log("send");
-      socket.emit('temp', tmpBox); 
-      socket.emit('humi', humBox); 
-      socket.emit('nowTime', time);
+      
 
       socket.on('chat-message', function() {
           accessNum++;
@@ -99,11 +95,10 @@ function boardDo(server) {
 
       socket.on('draw', function(){
         console.log('sent');
-        setTimeout(function send(){
           socket.emit('temp', tmpBox); 
           socket.emit('humi', humBox); 
           socket.emit('nowTime', time);
-        },5000)
+          socket.emit('reDraw', time);
       })
 
       socket.on('humUp', function(){
@@ -121,10 +116,7 @@ function boardDo(server) {
 
 
 
-      setInterval(()=>{
-        socket.emit('reDraw', time);
-        console.log("send");
-      },60000)
+    
 
       socket.on("disconnect", function() {
       });

@@ -124,8 +124,7 @@ $(function() {
     });
 
     $('#change').click(function(){
-        chart1 = new Highcharts.Chart('tmpGraph', optionsT);
-        chart2 = new Highcharts.Chart("humGraph", optionsH);
+        socket.emit('draw',$('#change').val());
     });
 });
 

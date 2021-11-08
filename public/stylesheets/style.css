@@ -34,7 +34,7 @@
 
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font: 13px Helvetica, Arial; border: solid 1px black; }
+body { font: 13px Helvetica, Arial; border: solid 1px black; margin: 10px;}
 #image { width: 50%; height: 100%; border: solid 1px black; text-align: center; float: left;}
 #image #embryo_gif {width: 80%; height: auto; border: solid 1px black;}
 #parameter th{ padding: 20px 10px;  border: solid 2px #0bd; }
