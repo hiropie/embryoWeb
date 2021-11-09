@@ -4,7 +4,8 @@ const fs = require('fs');
 const modify = require('./../public/javascripts/modify');
 const generator = require('./../public/javascripts/gif');
 
-var accessNum = 1;
+let accessNum = 0;                 
+let gifcount = 1;
 const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル
@@ -19,6 +20,7 @@ let NoT = 0; //カウントアップ
 function boardDo(server) {
   board.on('ready', function () {
     let startTime = new Date();
+    console.log(startTime);
     const push = new five.Led(7);
     const ben  = new five.Led(6);
     const bme280 = new five.IMU({
@@ -39,23 +41,23 @@ function boardDo(server) {
     });
     
     setTimeout(function array(){
-      if(NoT < 899){
-        time[NoT] = (new Date() - startTime) / 1000; 
+      if(NoT < 1799){
+        time[NoT] = new Date();; 
         tmpBox[NoT] = tmp;
         humBox[NoT] = hum;
       }else{
         time.shift();
         tmpBox.shift();
         humBox.shift();
-        time[NoT] = (new Date() - startTime) / 1000; 
-        tmpBox[NoT] = tmp;
-        humBox[NoT] = hum;
+        time.push(new Date()); 
+        tmpBox.push(tmp);
+        humBox.push(hum);
       }
-      console.log("  時間 : <", time[NoT], ">");
-      console.log("  気温 : ", tmp);
-      console.log("  湿度 : ", hum);
+      // console.log("  時間 : <", time[NoT], ">");
+      // console.log("  気温 : ", tmp);
+      // console.log("  湿度 : ", hum);
       NoT++;
-      setTimeout(array,5000);
+      setTimeout(array,1000);
     },5000)
 
     // setInterval(()=>{
@@ -68,17 +70,47 @@ function boardDo(server) {
     //     push.off();
     //     console.log('time close');
     //     ben.off();
-    //   },500);
+    //   },4500);
     // },900000)
 
-    var sio = socketio.listen(server);
-    sio.on('connection', function(socket) {
-      console.log('connect!!!');
-      
+    setTimeout(function flag(){
+      accessNum = 0;
+      setTimeout(flag,3600000);
+    },3600000)
 
-      socket.on('chat-message', function() {
-          accessNum++;
-          console.log('Send message to client accessNum: '+accessNum);
+    var sio = socketio.listen(server);
+    sio.on('connection', function(socket) {   //socket server run!!
+      console.log('connect!!!');
+            
+      if(accessNum == 0){  //first access capture 
+        accessNum = 1;
+        console.log("It's been over an hour since our last update.");
+        generator.capture(modify.toImage+modify.imgPath).then(()=>{
+          new Promise((resolve)=>{
+            setTimeout(() => {
+              resolve();
+            },2000);
+            console.log("2秒経過");
+          }).then(()=>{
+            generator.mkGif(accessNum);
+          }).then(()=>{
+            setTimeout(function(){
+              sio.emit('Show', accessNum);
+            },5000);
+          })
+        });
+      }else{
+        console.log("It's been less than an hour since our last update.");
+        if(gifcount >= 2){
+          socket.emit("Show", gifcount);
+        }else{
+          socket.emit("Show", accessNum);
+        }
+      }
+
+      socket.on('capture', function() {
+          gifcount++;
+          console.log('Send message to client accessNum: '+gifcount);
           generator.capture(modify.toImage+modify.imgPath).then(()=>{
               new Promise((resolve)=>{
                 setTimeout(() => {
@@ -86,19 +118,31 @@ function boardDo(server) {
                 }, 2000);
                 console.log("2秒経過");
               }).then(()=>{
-                generator.mkGif(accessNum);
+                generator.mkGif(gifcount);
               }).then(()=>{
-                sio.emit('chat-message', accessNum);
+                setTimeout(function(){
+                  sio.emit('Show', gifcount);
+                },5000);
               })
             });
       });
 
       socket.on('draw', function(){
-        console.log('sent');
+        console.log('sent' + new Date());
           socket.emit('temp', tmpBox); 
           socket.emit('humi', humBox); 
           socket.emit('nowTime', time);
           socket.emit('reDraw', time);
+      })
+
+      socket.on("update", function(){
+        if(gifcount >= 2){
+          socket.emit("Show", gifcount);
+          console.log("gifcount:"+gifcount);
+        }else{
+          socket.emit("Show", accessNum);
+          console.log("accessNum:"+accessNum);
+        }
       })
 
       socket.on('humUp', function(){
@@ -111,7 +155,7 @@ function boardDo(server) {
           push.off();
           console.log('web close');
           ben.off();
-        },500);
+        },4500);
       })
 
 
@@ -119,6 +163,7 @@ function boardDo(server) {
     
 
       socket.on("disconnect", function() {
+        console.log("connection cutting")
       });
     });
   })

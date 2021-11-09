@@ -5,8 +5,6 @@ const generator = require('./../public/javascripts/gif');
 const modify = require('./../public/javascripts/modify');
 var router = express.Router();
 
-
-var accessNum = 0;
 let count = 1;
 const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
@@ -16,21 +14,8 @@ cleanDir(modify.toImage+"gifs");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  
-  // accessNum++;
-  // generator.capture(modify.toImage+modify.imgPath).then(()=>{
-  //   new Promise((resolve)=>{
-  //     setTimeout(() => {
-  //       resolve();
-  //     }, 2000);
-  //     console.log("2秒経過");
-  //   }).then(()=>{
-  //     generator.mkGif(accessNum);
-  //   })
-  // });
   var data = {
-    title: 'Express',
-    num: accessNum,
+    title: 'Embryo'
   };
   res.render('index', data);
 });

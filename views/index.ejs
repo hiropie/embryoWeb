@@ -12,13 +12,12 @@
       <div id="buttons">
         <button id="change">更新</button>
         <button id="gifStart">再生</button>
-        <form id="pushDispenser">
-          <button id="push" type="submit">1プッシュ</button>
-        </form>
-        <form id="gifChange">
-          <button id="reload" type="submit">reload</button>
-        </form>
+        <button id="push">1プッシュ</button>
+        <button id="reload">reload</button>
       </div>
+    </div>
+
+    <div id="graphs">
       <table id="parameter">
         <tr align="center">
           <th>時間</th>
@@ -31,9 +30,6 @@
           <td id="hum">0</td>
         </tr>
       </table>
-    </div>
-
-    <div id="graphs">
       <div id="tmpGraph" class="graph"></div>
       <div class="spacer"></div>
       <div id="humGraph" class="graph"></div>
@@ -57,7 +53,7 @@
         setTimeout(()=>{
           const spinner = document.getElementById('loading');
           spinner.classList.add('loaded');
-        },1000);
+        },3000);
       };
       
       $('#gifStart').on('click', function(){

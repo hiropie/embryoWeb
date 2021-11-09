@@ -19,7 +19,7 @@ async function cleanDir(dirName){
     fs.readdir(dirName, function(error, files){
       files.forEach(function(file){
         fs.unlinkSync(dirName+'/'+file);
-        //console.log('delete');
+        //console.log('delte');
       });
     });
   })
@@ -44,10 +44,10 @@ const capture = async function makeShot(dirName){
 function shots(){
   screenshot(modify.toImage+modify.imgPath+'/'+count+".jpg", 
     {width: 1280, height: 720, quality: 200}, function(error, complete) {
-  if(error)
-    console.log("Screenshot failed", error);
-  else
-    console.log("Screenshot succeeded");
+  // if(error)
+  //   console.log("Screenshot failed", error);
+  // else
+  //   console.log("Screenshot succeeded");
     count++;
   });
 }
