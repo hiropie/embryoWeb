@@ -19,10 +19,10 @@ let optionsT = {
             },
         categories: [],
         type: "datetime",
+        tickInterval: 60,
     }],
     yAxis: [{ // Primary yAxis
-        tickInterval: 2,
-        minorTickInterval: 10,
+        minorTickInterval: 5,
         min: 20,
         max: 60,
         title: {
@@ -53,10 +53,10 @@ let optionsH = {
         },
         categories: [],
         type: "datetime",
+        tickInterval: 60*5,
     }],
     yAxis: [{ // Primary yAxis
-        tickInterval: 2,
-        minorTickInterval: 10,
+        minorTickInterval: 5,
         min: 20,
         max: 60,
         title: {
@@ -104,8 +104,12 @@ $(function() {
     setTimeout(function update(){
         socket.emit("draw")
         setTimeout(update,60000);
-      },60000)
+    },60000)
 
+    socket.on("connect",function(start){
+        const startTime = start;
+    })
+    
     socket.on('Show', function(count) {
         $('#num').text(count);
         $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count)+'.gif');
@@ -123,10 +127,10 @@ $(function() {
     socket.on('nowTime', function(time){
         timeList = time;
         now = toHour(Math.round(timeList[timeList.length - 1]));        
-        // $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
+        $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
         $('#tmp').text(Math.round(timeTmp[timeTmp.length-1]));
         $('#hum').text(Math.round(timeHum[timeHum.length-1]));
-        $('#time').text(timeList.length);
+        // ('#time').text(timeList.length);
         // $('#tmp').text(timeTmp.length);
         // $('#hum').text(timeHum.length);
     });

@@ -17,9 +17,22 @@ let tmpBox = []; //中身増える
 let dataBox = [time, tmpBox, humBox];
 let NoT = 0; //カウントアップ
 
+function toHour(time){
+  let sec = (time % 60) % 60;
+  let min = Math.floor(time / 60) % 60;
+  let hour = Math.floor(time / 3600);
+  
+  return{
+    time: time,
+    hour: hour,
+    min: min,
+    sec: sec
+  }
+}
+
 function boardDo(server) {
   board.on('ready', function () {
-    let startTime = new Date();
+    let startTime = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));;
     console.log(startTime);
     const push = new five.Led(7);
     const ben  = new five.Led(6);
@@ -41,25 +54,30 @@ function boardDo(server) {
     });
     
     setTimeout(function array(){
-      if(NoT < 1799){
-        time[NoT] = new Date();; 
-        tmpBox[NoT] = tmp;
-        humBox[NoT] = hum;
+      let nowTime = Math.floor((new Date() - startTime)/1000)
+      if(NoT < 3599){
+        // time[NoT] = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
+        time[NoT] = nowTime
+        tmpBox[NoT] = tmp
+        humBox[NoT] = hum
       }else{
         time.shift();
         tmpBox.shift();
         humBox.shift();
-        time.push(new Date()); 
-        tmpBox.push(tmp);
-        humBox.push(hum);
+        // time.push(new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000))); 
+        time.push(nowTime)
+        tmpBox.push(tmp)
+        humBox.push(hum)
       }
       // console.log("  時間 : <", time[NoT], ">");
       // console.log("  気温 : ", tmp);
       // console.log("  湿度 : ", hum);
       NoT++;
-      setTimeout(array,1000);
+      setTimeout(array,5000);
     },5000)
 
+
+    /*humidity control function */
     // setInterval(()=>{
     //   console.log('time Open');
     //   ben.on();
@@ -81,7 +99,8 @@ function boardDo(server) {
     var sio = socketio.listen(server);
     sio.on('connection', function(socket) {   //socket server run!!
       console.log('connect!!!');
-            
+      socket.emit("connect",startTime)      
+
       if(accessNum == 0){  //first access capture 
         accessNum = 1;
         console.log("It's been over an hour since our last update.");
@@ -128,11 +147,11 @@ function boardDo(server) {
       });
 
       socket.on('draw', function(){
-        console.log('sent' + new Date());
+        console.log('sent ' + new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000)));
           socket.emit('temp', tmpBox); 
           socket.emit('humi', humBox); 
           socket.emit('nowTime', time);
-          socket.emit('reDraw', time);
+          socket.emit('reDraw');
       })
 
       socket.on("update", function(){
@@ -158,13 +177,9 @@ function boardDo(server) {
         },4500);
       })
 
-
-
-    
-
       socket.on("disconnect", function() {
         console.log("connection cutting")
-      });
+      })
     });
   })
 }

@@ -39,7 +39,7 @@ const capture = async function makeShot(dirName){
           }
         },modify.interval*100);
       });
-    }
+  }
 
 function shots(){
   screenshot(modify.toImage+modify.imgPath+'/'+count+".jpg", 
