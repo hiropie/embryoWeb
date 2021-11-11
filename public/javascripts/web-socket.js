@@ -27,7 +27,7 @@ let optionsT = {
             },
         categories: [],
         // type: "datetime",
-        tickInterval: 60,
+        tickInterval: 360,
     }],
     yAxis: [{ // Primary yAxis
         style: {
@@ -73,7 +73,7 @@ let optionsH = {
         },
         categories: [],
         // type: "datetime",
-        tickInterval: 60,
+        tickInterval: 360,
     }],
     yAxis: [{ // Primary yAxis
         style: {

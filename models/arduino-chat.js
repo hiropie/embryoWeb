@@ -1,16 +1,18 @@
-const socketio = require('socket.io');
+// accessNumが1になる時、gif全消去でいいかも
+// gifが1以外ない時に、更新を押したら新しくgif作る
+const socketIo = require('socket.io');
 const five = require("johnny-five");
 const fs = require('fs');
 const modify = require('./../public/javascripts/modify');
 const generator = require('./../public/javascripts/gif');
 
 let accessNum = 0;                 
-let gifcount = 1;
+let gifCount = 1;
 const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル
 
-const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
+const board = new five.Board({port: "COM4"}); //ポート名指定はWindowsで必要なため、
 let time = []; //中身増える
 let humBox = []; //中身増える
 let tmpBox = []; //中身増える
@@ -40,6 +42,7 @@ function boardDo(server) {
         controller: "BME280",
         address: 0x76, // optional
     });
+    // Commenting when there is no sensor
     bme280.on("data", function(e,data) {
         if( this.barometer.pressure >90 ){      //気圧の初回値が変なので、異常値は読み飛ばす
           hum = this.hygrometer.relativeHumidity;
@@ -60,6 +63,8 @@ function boardDo(server) {
         time[NoT] = nowTime
         tmpBox[NoT] = tmp
         humBox[NoT] = hum
+        // tmpBox[NoT] = 0  //no sensor ver
+        // humBox[NoT] = 0  //no sensor ver
       }else{
         time.shift();
         tmpBox.shift();
@@ -68,6 +73,8 @@ function boardDo(server) {
         time.push(nowTime)
         tmpBox.push(tmp)
         humBox.push(hum)
+        // tmpBox.push(0)  //no sensor ver
+        // humBox.push(0)  //no sensor ver
       }
       // console.log("  時間 : <", time[NoT], ">");
       // console.log("  気温 : ", tmp);
@@ -96,14 +103,14 @@ function boardDo(server) {
       setTimeout(flag,3600000);
     },3600000)
 
-    var sio = socketio.listen(server);
+    var sio = socketIo.listen(server);
     sio.on('connection', function(socket) {   //socket server run!!
       console.log('connect!!!');
       socket.emit("connect",startTime)      
 
       if(accessNum == 0){  //first access capture 
         accessNum = 1;
-        console.log("It's been over an hour since our last update.");
+        console.log("gif make!");
         generator.capture(modify.toImage+modify.imgPath).then(()=>{
           new Promise((resolve)=>{
             setTimeout(() => {
@@ -119,17 +126,17 @@ function boardDo(server) {
           })
         });
       }else{
-        console.log("It's been less than an hour since our last update.");
-        if(gifcount >= 2){
-          socket.emit("Show", gifcount);
+        console.log("no gif make!");
+        if(gifCount >= 2){
+          socket.emit("Show", gifCount);
         }else{
           socket.emit("Show", accessNum);
         }
       }
 
       socket.on('capture', function() {
-          gifcount++;
-          console.log('Send message to client accessNum: '+gifcount);
+          gifCount++;
+          console.log('Send message to client accessNum: '+gifCount);
           generator.capture(modify.toImage+modify.imgPath).then(()=>{
               new Promise((resolve)=>{
                 setTimeout(() => {
@@ -137,10 +144,10 @@ function boardDo(server) {
                 }, 2000);
                 console.log("2秒経過");
               }).then(()=>{
-                generator.mkGif(gifcount);
+                generator.mkGif(gifCount);
               }).then(()=>{
                 setTimeout(function(){
-                  sio.emit('Show', gifcount);
+                  sio.emit('Show', gifCount);
                 },5000);
               })
             });
@@ -156,9 +163,9 @@ function boardDo(server) {
       })
 
       socket.on("update", function(){
-        if(gifcount >= 2){
-          socket.emit("Show", gifcount);
-          console.log("gifcount:"+gifcount);
+        if(gifCount >= 2){
+          socket.emit("Show", gifCount);
+          console.log("gifCount:"+gifCount);
         }else{
           socket.emit("Show", accessNum);
           console.log("accessNum:"+accessNum);
@@ -186,6 +193,3 @@ function boardDo(server) {
 }
 
 module.exports = boardDo;
-
-//時間、湿度、温度のデータを配列で送って、server-socketでグラフ化
-//配列は時間と回数で入れ替える。入れ替えにはshiftプロパティを使う

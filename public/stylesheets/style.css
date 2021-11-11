@@ -35,21 +35,22 @@
 
 * { box-sizing: border-box; }
 body { font: 13px Helvetica, Arial; height: 100vh; width: 100vw;}
-#image { width: 50%; height: 50%; border: solid 1px blue; text-align: center; float: left;}
-#image #embryo_gif {width: 80%; height: auto; border: solid 1px black;}
+#capture { width: 50%; height: 50%; text-align: center; float: left;}
+#buttons { width: 15%; height: 100%; float: left; flex-direction: column;}
+#buttons .sand { height: 14.5%;}           
+#buttons .spacer { height: 5%;}
+#buttons button { background:aquamarine; width: 70%; height: 14%;}
+#capture #image { width: 85%; height: 100%; float: right; position: relative;}
+#capture #image #embryo_gif { width: 96%; height: auto; border: solid 1px black;
+  position: absolute; inset: 0; margin: auto; float: left;}
+
 #parameter th{ padding: 20px 10px;  border: solid 2px #0bd; }
 #parameter td{ padding: 20px 10px;  border: solid 2px #0bd; }
-#buttons { width: 100%; display: flex;  justify-content: center; }
-#buttons button { width: 100%; height: 50px; background: rgb(130, 224, 255);  }
-#buttons #change{ width: 20%; border: solid 2px black; margin: 1px 0px;} 
-#buttons #gifStart{ width: 20%; border: solid 2px black; margin: 1px 0px;}
-#buttons #push{ width: 20%; border: solid 2px black; margin: 1px 0px;}
-#buttons #reload{ width: 20%; border: solid 2px black; margin: 1px 0px;}
 
 #graphs { height: 100%; width:50%; float: right; padding: 1% 1%;}
-/* .sand { height: 1%; } */
-.spacer { height: 2%; }
-.graph  { height: 48%;  width: 98%; }
+#graphs .sand   { height: 1%; }
+#graphs .spacer { height: 2%; }
+#graphs .graph  { height: 48%;  width: 98%; }
 
 
 /*メディアクエリ（PCファースト）*/
@@ -60,3 +61,40 @@ body { font: 13px Helvetica, Arial; height: 100vh; width: 100vw;}
   /*スマホ用CSS*/
 }
 
+/*まずはお決まりのボックスサイズ算出をborer-boxに */
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 62.5%;/*rem算出をしやすくするために*/
+}
+
+.btn,
+a.btn,
+button.btn {
+  font-size: 1.6rem;
+  /* font-weight: 700; */
+  /* line-height: 1.5;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 4rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  color: #212529;
+  border-radius: 0.5rem; */
+}
