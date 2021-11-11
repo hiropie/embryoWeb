@@ -46,9 +46,10 @@ body { font: 13px Helvetica, Arial; height: 100vh; width: 100vw;}
 #buttons #push{ width: 20%; border: solid 2px black; margin: 1px 0px;}
 #buttons #reload{ width: 20%; border: solid 2px black; margin: 1px 0px;}
 
-#graphs { height: 90%; width:50%; border: solid 1px red; float: right; }
-.spacer { height: 4%; }
-.graph  { height: 43%;  width: 100%; }
+#graphs { height: 100%; width:50%; float: right; padding: 1% 1%;}
+/* .sand { height: 1%; } */
+.spacer { height: 2%; }
+.graph  { height: 48%;  width: 98%; }
 
 
 /*メディアクエリ（PCファースト）*/

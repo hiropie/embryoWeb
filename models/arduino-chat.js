@@ -18,15 +18,15 @@ let dataBox = [time, tmpBox, humBox];
 let NoT = 0; //カウントアップ
 
 function toHour(time){
-  let sec = (time % 60) % 60;
+  let sec = Math.round((time % 60) % 60);
   let min = Math.floor(time / 60) % 60;
   let hour = Math.floor(time / 3600);
   
   return{
     time: time,
-    hour: hour,
-    min: min,
-    sec: sec
+    hour: ("00" + hour).slice(-2),
+    min: ("00" + min).slice(-2),
+    sec: ("00" + sec).slice(-2)
   }
 }
 
@@ -55,7 +55,7 @@ function boardDo(server) {
     
     setTimeout(function array(){
       let nowTime = Math.floor((new Date() - startTime)/1000)
-      if(NoT < 3599){
+      if(NoT < 1440){
         // time[NoT] = new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000));
         time[NoT] = nowTime
         tmpBox[NoT] = tmp
@@ -147,7 +147,8 @@ function boardDo(server) {
       });
 
       socket.on('draw', function(){
-        console.log('sent ' + new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000)));
+        let elaps = toHour((new Date() - startTime)/1000) 
+        console.log('sent ' + elaps.hour + ":" + elaps.min + ":" + elaps.sec);
           socket.emit('temp', tmpBox); 
           socket.emit('humi', humBox); 
           socket.emit('nowTime', time);

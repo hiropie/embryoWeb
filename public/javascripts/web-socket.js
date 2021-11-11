@@ -5,23 +5,34 @@ let timeHum = [];
 let timeTmp = [];
 let now;
 let num = 0;
+let clock;
 
 let optionsT = {
     chart: {
-        // renderTo: 'tmpGraph',　
+        // renderTo: 'tmpGraph',
+        zoomType: 'xy',
+        borderColor: '#EBBA95',
+        borderWidth: 2,
+        margin: [100, 100, 100, 100],
     },
     title: {
         text: '温度'
     },
     xAxis: [{
+        style: {
+            fontSize: '24px',
+        },
     　　title: {
                 text: '時刻',         
             },
         categories: [],
-        type: "datetime",
+        // type: "datetime",
         tickInterval: 60,
     }],
     yAxis: [{ // Primary yAxis
+        style: {
+            fontSize: '24px',
+        },
         minorTickInterval: 5,
         min: 20,
         max: 60,
@@ -29,33 +40,45 @@ let optionsT = {
             text: '気温'
         }
     }],
+    legend: {
+        enabled: false
+    },
     series: [{
-        name: '気温',
         type: 'line',
         turboThreshold: 0,
         data: [],
-        tooltip: {
-            valueSuffix: ' ℃' 
-        }
+        // tooltip: {
+        //     valueSuffix: ' ℃' 
+        // }
     }]
 };
 
 let optionsH = {
     chart: {
         // renderTo: 'humGraph',　
+        zoomType: 'xy',
+        borderColor: '#EBBA95',
+        borderWidth: 2,
+        margin: [100, 100, 100, 100],
     },
     title: {
         text: '湿度'
     },
     xAxis: [{
+        style: {
+            fontSize: '24px',
+        },
 　　    title: {
             text: '時刻',         
         },
         categories: [],
-        type: "datetime",
-        tickInterval: 60*5,
+        // type: "datetime",
+        tickInterval: 60,
     }],
     yAxis: [{ // Primary yAxis
+        style: {
+            fontSize: '24px',
+        },
         minorTickInterval: 5,
         min: 20,
         max: 60,
@@ -64,14 +87,16 @@ let optionsH = {
         }
 
     }],
+    legend: {
+        enabled: false
+    },
     series: [{
-        name: '湿度',
         type: 'line',
         turboThreshold: 0,
         data: [],
-        tooltip: {
-            valueSuffix: ' ℃' 
-        }
+        // tooltip: {
+        //     valueSuffix: '%' 
+        // }
     }]
 };
 
@@ -125,8 +150,11 @@ $(function() {
 
 
     socket.on('nowTime', function(time){
-        timeList = time;
-        now = toHour(Math.round(timeList[timeList.length - 1]));        
+        for(let i=0; i<time.length; i++){ 
+            clock = toHour(time[i])
+            timeList[i] = clock.hour + ":" + clock.min + ":" + clock.sec ;
+        }
+        // now = toHour(Math.round(timeList[timeList.length - 1]));        
         $('#time').text(now.hour + ":" + now.min + ":" + now.sec);
         $('#tmp').text(Math.round(timeTmp[timeTmp.length-1]));
         $('#hum').text(Math.round(timeHum[timeHum.length-1]));
