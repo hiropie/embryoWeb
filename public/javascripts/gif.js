@@ -128,7 +128,7 @@ const mkGif = async function makeAnimeGif(num){
   encoder.createReadStream().pipe(fs.createWriteStream(GifFile+num+'.gif'));
   encoder.start();
   encoder.setRepeat(-1);   // 0:リピートあり, -1:なし
-  encoder.setDelay(100);  // フレーム間隔(ミリ秒)
+  encoder.setDelay(200);  // フレーム間隔(ミリ秒)
   encoder.setQuality(200); // 画像品質
 
   // canvas準備

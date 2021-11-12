@@ -137,7 +137,10 @@ $(function() {
     
     socket.on('Show', function(count) {
         $('#num').text(count);
-        $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count)+'.gif');
+        $('#embryo_gif').attr('src', '/images/basis/first.png');
+        setTimeout(function(){
+            $('#embryo_gif').attr('src', '/images/gifs/actionScreen'+(count)+'.gif');
+        },500)        
     });
 
     socket.on('temp', function(tmp){
