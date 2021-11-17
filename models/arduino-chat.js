@@ -12,7 +12,7 @@ const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル
 
-const board = new five.Board({port: "COM4"}); //ポート名指定はWindowsで必要なため、
+const board = new five.Board({port: "COM4"}); 
 let time = []; //中身増える
 let humBox = []; //中身増える
 let tmpBox = []; //中身増える
@@ -69,41 +69,20 @@ function boardDo(server) {
         time.shift();
         tmpBox.shift();
         humBox.shift();
-        // time.push(new Date(Date.now() + ((new Date().getTimezoneOffset() + (9 * 60)) * 60 * 1000))); 
         time.push(nowTime)
         tmpBox.push(tmp)
         humBox.push(hum)
-        // tmpBox.push(0)  //no sensor ver
-        // humBox.push(0)  //no sensor ver
       }
-      // console.log("  時間 : <", time[NoT], ">");
-      // console.log("  気温 : ", tmp);
-      // console.log("  湿度 : ", hum);
       NoT++;
       setTimeout(array,5000);
     },5000)
-
-
-    /*humidity control function */
-    // setInterval(()=>{
-    //   console.log('time Open');
-    //   ben.on();
-    //   console.log('push start');
-    //   push.on();
-    //   setTimeout(() => {
-    //     console.log('push end');
-    //     push.off();
-    //     console.log('time close');
-    //     ben.off();
-    //   },4500);
-    // },900000)
 
     setTimeout(function flag(){
       accessNum = 0;
       setTimeout(flag,3600000);
     },3600000)
 
-    var sio = socketIo.listen(server);
+    const sio = socketIo.listen(server);
     sio.on('connection', function(socket) {   //socket server run!!
       console.log('connect!!!');
       socket.emit("connect",startTime)      
