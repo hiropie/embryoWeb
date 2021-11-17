@@ -12,7 +12,9 @@ const WIDTH   = 1280;             // 画像サイズ X
 const HEIGHT  = 720;             // 画像サイズ Y
 const GifFile = './public/images/gifs/actionScreen';   // 出力ファイル
 
-const board = new five.Board({port: "COM4"}); 
+
+const board = new five.Board({port: "COM6"}); //ポート名指定はWindowsで必要なため、
+
 let time = []; //中身増える
 let humBox = []; //中身増える
 let tmpBox = []; //中身増える
